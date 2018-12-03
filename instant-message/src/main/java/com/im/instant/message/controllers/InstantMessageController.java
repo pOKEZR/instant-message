@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.im.instant.message.IMResponse;
+import com.im.instant.message.Strings;
 import com.im.instant.message.services.InstantMessageService;
 
 
@@ -20,10 +21,29 @@ public class InstantMessageController {
 	InstantMessageService instantMessageService;
 
 	@RequestMapping(value = "/createTchatRoom", method = RequestMethod.POST)
-	public ResponseEntity<IMResponse> createTchatRoom(@RequestBody String request) {
+	public ResponseEntity<IMResponse> createTchatRoom(@RequestBody String tchatRoomName) {
 
-		if (request != null) {
-			IMResponse response = instantMessageService.createRoom(request);
+		if (tchatRoomName != null) {
+			
+			IMResponse response = instantMessageService.createRoom(tchatRoomName);
+			
+			if (!response.isSuccess()) {
+				return new ResponseEntity<IMResponse>(response, HttpStatus.EXPECTATION_FAILED);
+			} else {
+				return new ResponseEntity<IMResponse>(response, HttpStatus.OK);
+			}
+		} else {
+			return new ResponseEntity<IMResponse>(new IMResponse(Strings.NULL_REQUEST), HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@RequestMapping(value = "/createUser", method = RequestMethod.POST)
+	public ResponseEntity<IMResponse> createUser(@RequestBody String userName) {
+
+		if (userName != null) {
+			
+			IMResponse response = instantMessageService.createUser(userName);
+			
 			if (!response.isSuccess()) {
 				return new ResponseEntity<IMResponse>(response, HttpStatus.EXPECTATION_FAILED);
 			} else {
