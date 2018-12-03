@@ -1,0 +1,201 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+		
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.im</groupId>
+	<version>1.0.0</version>
+	<packaging>pom</packaging>
+	
+	<description>Parent maven project for all octopussy artifacts</description>
+    <url>http://www.cgi.com/fr</url>
+
+	<scm>
+        <connection>scm:git:ssh://pic@10.80.145.29/home/pic/git/smartcase/octopussy</connection>
+        <developerConnection>scm:git:ssh://pic@10.80.145.29/home/pic/git/smartcase/octopussy</developerConnection>
+        <url>http://10.80.145.29/home/pic/git/smartcase/smartcase/octopussy</url>
+    </scm>
+	
+	<properties>
+		<java.version>1.8</java.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<sonar.jacoco.reportPath>${project.build.directory}/jacoco-ut.exec</sonar.jacoco.reportPath>
+	</properties>
+
+	<!-- Spring Boot -->
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.5.6.RELEASE</version>
+	</parent>
+
+
+	
+
+	<build>
+		<pluginManagement>
+			<plugins>
+
+				<!-- maven plugin for spring boot -->
+				<!-- allows to : mvn package spring-boot:repackage -->
+				<plugin>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-maven-plugin</artifactId>
+					<executions>
+						<execution>
+							<goals>
+								<goal>repackage</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+
+				<plugin>
+					<artifactId>maven-resources-plugin</artifactId>
+					<version>2.7</version>
+				</plugin>
+
+
+				<!-- maven plugin used for unit tests -->
+				<!-- The command mvn clean test runs unit tests and creates the code 
+					coverage report for unit tests to the directory target/site/jacoco-ut. -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>2.19.1</version>
+				</plugin>
+
+				<!-- JaCoCo configuration -->
+				<plugin>
+					<groupId>org.jacoco</groupId>
+					<artifactId>jacoco-maven-plugin</artifactId>
+					<version>0.7.5.201505241946</version>
+					<executions>
+						<!-- Prepares the property pointing to the JaCoCo runtime agent which 
+							is passed as VM argument when Maven the Surefire plugin is executed. -->
+						<execution>
+							<id>pre-unit-test</id>
+							<goals>
+								<goal>prepare-agent</goal>
+							</goals>
+						</execution>
+						<!-- Ensures that the code coverage report for unit tests is created 
+							after unit tests have been run. -->
+						<execution>
+							<id>post-unit-test</id>
+							<phase>test</phase>
+							<goals>
+								<goal>report</goal>
+							</goals>
+							<configuration>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+
+			</plugins>
+		</pluginManagement>
+	</build>
+
+	<dependencies>
+
+		<!-- For Spring MVC to build a REST API -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<!-- To secure the API -->
+		<!-- <dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency> -->
+
+		<!-- For Spring Boot testing -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- Fore measuring code coverage with tests -->
+		<dependency>
+			<groupId>org.jacoco</groupId>
+			<artifactId>jacoco-maven-plugin</artifactId>
+			<version>0.7.5.201505241946</version>
+		</dependency>
+
+		<!-- To deploy to external servlet container -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- For returning objects as JSON -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.5</version>
+		</dependency>
+
+		<!-- For logging and translating format codes -->
+		<dependency>
+			<groupId>org.fusesource.jansi</groupId>
+			<artifactId>jansi</artifactId>
+			<version>1.16</version>
+		</dependency>
+	</dependencies>
+	
+	<profiles>
+		<profile>
+			<modules>
+				<module>com-cgi-ecm-cmf-audio-services</module>
+				<module>com-cgi-ecm-cmf-content-enricher-services</module>
+				<module>com-cgi-ecm-cmf-document-classification-services</module>
+				<module>com-cgi-ecm-cmf-notification-case-services</module>
+				<module>com-cgi-ecm-cmf-notification-salesforce-services</module>
+				<module>com-cgi-ecm-cmf-saa-services</module>
+				<module>com-cgi-ecm-cmf-ocr-services</module>
+				<module>com-cgi-ecm-cmf-octopussy</module>
+				<module>connecteur-exchange</module>
+				<module>com-cgi-ecm-cmf-enricher-mrz-services</module>
+			</modules>
+		</profile>
+	</profiles>
+	
+	<repositories>
+		<repository>
+			<id>spring-releases</id>
+			<url>https://repo.spring.io/libs-release</url>
+		</repository>
+		<repository>
+			<id>artifactory</id>
+			<name>artifactory</name>
+			<url>http://10.80.145.29:8090/artifactory/libs</url>
+		</repository>
+	</repositories>
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>spring-releases</id>
+			<url>https://repo.spring.io/libs-release</url>
+		</pluginRepository>
+	</pluginRepositories>
+	<artifactId>instant-message</artifactId>
+	<name>instant-message</name>
+</project>
