@@ -1,0 +1,5 @@
+com/cgi/ecm/cmf/cv/parser/CvParserResponse.class
+com/cgi/ecm/cmf/cv/parser/services/CriteresCvParser.class
+com/cgi/ecm/cmf/cv/parser/services/CvParserService.class
+com/cgi/ecm/cmf/cv/parser/CvParserStarter.class
+com/cgi/ecm/cmf/cv/parser/Strings.class
