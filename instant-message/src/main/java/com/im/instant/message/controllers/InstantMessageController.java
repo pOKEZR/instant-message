@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.im.instant.message.IMResponse;
 import com.im.instant.message.Message;
 import com.im.instant.message.Strings;
+import com.im.instant.message.TchatRooms;
+import com.im.instant.message.Users;
 import com.im.instant.message.services.InstantMessageService;
 
 
@@ -22,10 +24,11 @@ public class InstantMessageController {
 	InstantMessageService instantMessageService;
 
 	@RequestMapping(value = "/createTchatRoom", method = RequestMethod.POST)
-	public ResponseEntity<IMResponse> createTchatRoom(@RequestBody String tchatRoomName) {
+	public ResponseEntity<IMResponse> createTchatRoom(@RequestBody TchatRooms tchatRoom) {
 
-		if (tchatRoomName != null) {
+		if (tchatRoom != null) {
 			
+			String tchatRoomName = tchatRoom.getRoomName();
 			IMResponse response = instantMessageService.createRoom(tchatRoomName);
 			
 			if (!response.isSuccess()) {
@@ -39,10 +42,12 @@ public class InstantMessageController {
 	}
 	
 	@RequestMapping(value = "/createUser", method = RequestMethod.POST)
-	public ResponseEntity<IMResponse> createUser(@RequestBody String userName, @RequestBody String password) {
+	public ResponseEntity<IMResponse> createUser(@RequestBody Users user) {
 
-		if (userName != null) {
+		if (user != null) {
 			
+			String userName = user.getUserName();
+			String password = user.getPassword();
 			IMResponse response = instantMessageService.createUser(userName, password);
 			
 			if (!response.isSuccess()) {

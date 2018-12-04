@@ -20,12 +20,18 @@ public class InstantMessageService {
 
 	private final Logger log = (Logger) LoggerFactory.getLogger(InstantMessageService.class);
 
-	final String linuxPath = "/developpement/local-git-clone/octopussy/instant-message/sauv/";
+	final String linuxPath = "C:\\sauv\\";
+	//final String linuxPath = "/local-git-clone/octopussy/instant-message/sauv/";
 	// final String windowsPath = "";
 
-	final String userFolderPath = linuxPath + "users/";
+	
+	final String userFolderPath = linuxPath + "users\\";
 
-	final String messagePath = linuxPath + "messages/";
+	final String messagePath = linuxPath + "messages\\";
+	
+//	final String userFolderPath = linuxPath + "users/";
+//
+//	final String messagePath = linuxPath + "messages/";
 
 	public IMResponse createRoom(String roomName) {
 
@@ -141,7 +147,7 @@ public class InstantMessageService {
 		}
 		success = true;
 
-		return new IMResponse(success, "User Created");
+		return new IMResponse(success, "Message sent");
 	}
 
 	
@@ -156,8 +162,6 @@ public class InstantMessageService {
 				for (int i = 0; i < files.length; i++) {
 					if (userName.equals(files[i].getName())) {
 						return true;
-					} else {
-						return false;
 					}
 				}
 			}
@@ -174,8 +178,6 @@ public class InstantMessageService {
 			for (int i = 0; i < files.length; i++) {
 				if (tchatRoomName.equals(files[i].getName())) {
 					return true;
-				} else {
-					return false;
 				}
 			}
 		}
@@ -198,6 +200,8 @@ public class InstantMessageService {
 			}
 			response.setTchatRoomName(allTchatRoomName);
 		}
+		
+		response.setSuccess(true);
 		
 		return response;
 	}

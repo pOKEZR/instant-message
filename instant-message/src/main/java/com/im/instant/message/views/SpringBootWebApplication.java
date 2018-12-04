@@ -7,9 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @ComponentScan({
-	"com.im.instant.message.services",
-	"com.im.instant.message.views",
-	"com.im.instant.message.controllers"
+	"com.im.instant.message"
 })
 public class SpringBootWebApplication extends org.springframework.boot.web.servlet.support.SpringBootServletInitializer {
 
