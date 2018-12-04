@@ -1,11 +1,18 @@
 package com.im.instant.message;
 
+import java.util.List;
+
 public class IMResponse {
 
 	private boolean success;
 	
 	private String errorMessage;
 	
+	private List<String> tchatRoomName;
+	
+	public IMResponse() {
+	}
+
 	public IMResponse(boolean success, String errorMessage) {
 		
 		this.success = success;
@@ -45,6 +52,20 @@ public class IMResponse {
 	 */
 	public void setSuccess(boolean success) {
 		this.success = success;
+	}
+
+	/**
+	 * @return the tchatRoomName
+	 */
+	public List<String> getTchatRoomName() {
+		return tchatRoomName;
+	}
+
+	/**
+	 * @param tchatRoomName the tchatRoomName to set
+	 */
+	public void setTchatRoomName(List<String> tchatRoomName) {
+		this.tchatRoomName = tchatRoomName;
 	}
 
 }
