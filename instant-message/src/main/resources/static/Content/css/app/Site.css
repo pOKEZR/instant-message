@@ -31,6 +31,14 @@ body {
 }
 #grpName {
 	    text-align: center;
+	    display:inline-block;
+	    margin-left:23%;
+}
+#addGrp {
+	display:inline-block;
+	float:right;
+	margin-top:5px;
+	cursor:pointer;
 }
 #grpContainer {
 	width:100%;
@@ -64,4 +72,68 @@ body {
 #grpHeader {
 	height:5%;
 	border-bottom:1px solid gray;
+}
+
+.bubble {
+  height: auto;
+  max-width: 60%;
+  background-color: #2962FF;
+  color: #fff;
+  margin: 5px 0;
+  padding: 10px 20px;
+}
+
+.bubble:nth-child(1) {
+ -webkit-border-radius: 20px 20px 20px 0;
+  border-radius: 20px 20px 20px 0;
+}
+
+ .bubble:not(:first-child) {
+   -webkit-border-radius: 5px 20px 20px 5px;
+   border-radius: 5px 20px 20px 5px;
+}
+
+.bubble:last-child {
+  -webkit-border-radius: 0 20px 20px 20px;
+  border-radius: 0 20px 20px 20px;
+}
+.bubble:only-of-type {
+  -webkit-border-radius: 20px;
+  border-radius: 20px;
+}
+.textMessage {
+	display:inline-block;
+	margin:0;
+}
+.textMessageTime {
+	display:inline-block;
+	float:right;
+}
+
+#currentGrpName {
+	text-align: center;
+    margin-top: 8px;
+}
+#grpMsgContainer {
+	height: 88%;
+	border-bottom:1px solid gray;
+}
+#sendMsgContainer {
+	height:5%;
+	padding:0;
+}
+#msgArea {
+	margin: 0;
+    width: 94%;
+    height: 138%;
+    padding: 0;
+    border-top:0;
+    resize:none;
+}
+#sendMsg {
+	top: 8px;
+    right: 25px;
+    cursor: pointer;
+    color: #649affc7;
+    position: absolute;
 }

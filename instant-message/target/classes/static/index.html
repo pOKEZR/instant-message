@@ -1,14 +1,13 @@
 <html>
 <head>
 <title>Instant Messages</title>
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
 <link rel="stylesheet" href="/Content/css/app/Site.css" />
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="/Content/js/app/Index.js"></script>
 
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
 
@@ -16,7 +15,7 @@
 		<div id="grpList" class="col-xs-5">
 			<div class="row">
 				<div id="grpInfo" class="col-xs-12">
-					<h4 id="grpName">Instant Messages</h4>
+					<h4 id="grpName">Instant Messages</h4><i id="addGrp" class="fa fa-plus-circle fa-2x" aria-hidden="true"></i>
 				</div>
 				<div id="grpContainer" class="col-xs-12">
 					<div id="grpRow" class="row">
@@ -39,11 +38,50 @@
 		<div id="msgList" class="col-xs-4">
 			<div class="row">
 				<div id="grpHeader" class="col-xs-12">
-				
+					<p id="currentGrpName">yala yala</p>
+				</div>
+				<div id="grpMsgContainer" class="col-xs-12">
+					<div class="bubble-container">
+						<div class="bubble">
+							<p class="textMessage">Premier message du tchat !!</p>
+							<p class="textMessageTime">12:24</p>
+						</div>
+						<div class="bubble">
+							<p class="textMessage">test</p>
+							<p class="textMessageTime">13:01</p>
+						</div>
+						<div class="bubble">
+							<p class="textMessage">test 2</p>
+							<p class="textMessageTime">13:01</p>
+						</div>
+					</div>
+				</div>
+				<div id="sendMsgContainer" class="col-xs-12">
+					<textarea id="msgArea"></textarea>
+					<i id="sendMsg" class="fa fa-paper-plane fa-3x"></i>
 				</div>
 			</div>
 		</div>
 	</div>
 
+<div id="myModal" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Modal body text goes here.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 </html>
