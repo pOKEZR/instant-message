@@ -1,0 +1,67 @@
+html {
+	width:100%;
+	height:100%;
+	overflow-x:hidden;
+}
+body {
+	width:100%;
+	height:100%;
+}
+.container {
+	margin:0;
+}
+#grpList {
+	height:100%;
+	width:20%;
+	/* background-color:red; */
+	border-right:1px solid gray;
+}
+#msgList {
+	height:100%;
+	width:80%;
+	/* background-color:blue; */
+}
+.grpSelector {
+	border-bottom : 1px solid rgba(0,0,0,.25);
+}
+#grpInfo {
+	width:100%;
+	height:5%;
+	border-bottom:1px solid gray;
+}
+#grpName {
+	    text-align: center;
+}
+#grpContainer {
+	width:100%;
+	height:95%;
+}
+.grpSelector {
+	height:7%;
+}
+.grpIcon {
+	margin:15%;
+}
+.grpPicture {
+	height:100%;
+}
+.grpName {
+	margin-top:5px;
+	margin-bottom:0px;
+}
+.lastMsgGrp {
+	display:inline-block;
+	white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 80%;
+    color:rgba(153,153,153);
+}
+.lastMsgTime {
+	display:inline-block;
+	float:right;
+}
+#grpHeader {
+	height:5%;
+	border-bottom:1px solid gray;
+}
