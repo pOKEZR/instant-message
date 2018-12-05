@@ -33,9 +33,9 @@ public class InstantMessageService {
 
 	final String messagePath = linuxPath + "messages\\";
 
-//	final String userFolderPath = linuxPath + "users/";
-//
-//	final String messagePath = linuxPath + "messages/";
+	// final String userFolderPath = linuxPath + "users/";
+	//
+	// final String messagePath = linuxPath + "messages/";
 
 	public IMResponse createRoom(String roomName) {
 
@@ -133,21 +133,16 @@ public class InstantMessageService {
 			if (isUserExist(userName) == true) {
 				if (isTchatRoomExist(tchatRoom) == true) {
 //					File messageFile = new File(messagePath + tchatRoom + "/" + "message.txt");
-					
-					FileWriter fw = new FileWriter(messagePath + tchatRoom + "/" + "message.txt", true);
 
 					try {
-						
-						BufferedWriter writer = new BufferedWriter(new FileWriter(messageFile));
-						BufferedWriter bw = new BufferedWriter(fw);
-					    PrintWriter out = new PrintWriter(bw))
-						
-						out.println("the text");
-						writer.write(message.getUser());
-						writer.write(message.getMessage());
-						writer.write(message.getDate());
-						writer.write(System.lineSeparator());
-						writer.close();
+
+						FileWriter messageFile = new FileWriter(messagePath + tchatRoom + "/" + "message.txt", true);
+
+						BufferedWriter bw = new BufferedWriter(messageFile);
+						PrintWriter out = new PrintWriter(bw);
+
+						out.println(message.getUser() + "|" + message.getMessage() + "|" + message.getDate());
+						out.close();
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
@@ -231,7 +226,7 @@ public class InstantMessageService {
 				msgList.add(line);
 				line = bufReader.readLine();
 			}
-			
+
 			response.setMsgList(msgList);
 
 			bufReader.close();
@@ -241,7 +236,44 @@ public class InstantMessageService {
 		}
 
 		response.setSuccess(true);
+
+		return response;
+	}
+
+	public IMResponse checkIsUserExist(String userName, String userPassword) {
 		
+		boolean success = false;
+		IMResponse response = new IMResponse();
+		
+		if(userName != null && userPassword != null) {
+			if(isUserExist(userName) == true) {
+				BufferedReader bufReader;
+				try {
+					bufReader = new BufferedReader(new FileReader(userFolderPath + userName + "\\" + userName + "login.txt"));
+					String line = bufReader.readLine();
+					while (line != null) {
+						if (line.equals(userName)) {
+							response.setSuccess(true);
+							response.setErrorMessage("User and password MATCH");
+							bufReader.close();
+							return response;	
+						}else {
+							line = bufReader.readLine();
+						}
+						if (line.equals(userPassword)) {
+							response.setSuccess(true);
+							response.setErrorMessage("User and password MATCH");
+							bufReader.close();
+							return response;					
+						}						
+					}
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		response.setSuccess(false);
 		return response;
 	}
 

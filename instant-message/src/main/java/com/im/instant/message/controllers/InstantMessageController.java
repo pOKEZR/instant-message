@@ -107,4 +107,23 @@ public class InstantMessageController {
 			return new ResponseEntity<IMResponse>(new IMResponse(Strings.NULL_REQUEST), HttpStatus.BAD_REQUEST);
 		}
 	}
+	
+	@RequestMapping(value = "/eventCheckIsUserExist", method = RequestMethod.POST)
+	public ResponseEntity<IMResponse> eventCheckIsUserExist(@RequestBody Users user) {
+
+		if (user != null) {
+			
+			String userName = user.getUserName();
+			String userPassword = user.getPassword();
+			IMResponse response = instantMessageService.checkIsUserExist(userName, userPassword);
+			
+			if (!response.isSuccess()) {
+				return new ResponseEntity<IMResponse>(response, HttpStatus.EXPECTATION_FAILED);
+			} else {
+				return new ResponseEntity<IMResponse>(response, HttpStatus.OK);
+			}
+		}else {
+			return new ResponseEntity<IMResponse>(new IMResponse(Strings.NULL_REQUEST), HttpStatus.BAD_REQUEST);
+		}
+	}
 }

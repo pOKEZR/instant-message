@@ -7,6 +7,10 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="/Content/js/app/Index.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+
 
 </head>
 <body>
@@ -39,6 +43,7 @@
 			<div class="row">
 				<div id="grpHeader" class="col-xs-12">
 					<p id="currentGrpName">yala yala</p>
+					<p class="disconnectBtn pull-right"><i class="fa fa-sign-out fa-2x" aria-hidden="true"></i></p>
 				</div>
 				<div id="grpMsgContainer" class="col-xs-12">
 					<div class="bubble-container">
@@ -57,7 +62,8 @@
 					</div>
 				</div>
 				<div id="sendMsgContainer" class="col-xs-12">
-					<textarea id="msgArea"></textarea>
+					<textarea onkeypress="keyPress();" id="msgArea"></textarea>
+					<i id="sendImg" class="fa fa-file-image-o fa-2x" aria-hidden="true"></i>
 					<i id="sendMsg" class="fa fa-paper-plane fa-3x"></i>
 				</div>
 			</div>
@@ -80,6 +86,42 @@
       <div class="modal-footer">
         <button id="createRoom" type="button" class="btn btn-primary">Créer</button>
         <button  type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="loginModal" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Connexion / Inscription</h5>
+      </div>
+      <div class="modal-body">
+       		<label for="tchatRoomName">Pseudo</label>
+       		<input id="loginTxt" type="text" placeholder="Nom...">
+       		<label for="passwordTxt">Password : </label>
+       		<input onkeyup="validPassword();"id="passwordTxt" type="password" placeholder="password...">
+      </div>
+      <div class="modal-footer">
+        <button id="loginUser" type="button" class="btn btn-primary">Login</button>
+        <button id="registerUser" type="button" class="btn btn-secondary">Inscription</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="imgModal" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Publier une image</h5>
+      </div>
+      <div class="modal-body">
+       		<label for="tchatRoomName">Lien direct : </label>
+       		<input id="linkTxt" type="text" placeholder="url direct...">
+      </div>
+      <div class="modal-footer">
+        <button id="sendMessageImg" type="button" class="btn btn-primary">Envoyer</button>
       </div>
     </div>
   </div>
