@@ -36,6 +36,8 @@ $( document ).ready(function() {
 	$('body').on('click', '.groupBorder', function(param) {
 	  switchGrp(this.attributes[0].value);
 	  currentTchatRoom = this.attributes[0].value;
+		$('#grpMsgContainer').animate({scrollTop: 100000},1000);
+
 	});
 	
 	$('#sendMsg').click(function () {
@@ -78,7 +80,12 @@ function getAllTchatRoom() {
 				</div></div></div>';
 		}
 		$('.grpSelector').append(html);
-		currentTchatRoom = listTchatRoom[0];
+		if(	$.cookie("tchatRoomNameCookie") != null) {
+			currentTchatRoom = 	$.cookie("tchatRoomNameCookie")
+
+		} else {
+			currentTchatRoom = listTchatRoom[0];
+		}
 	}
 
 }
@@ -225,6 +232,7 @@ function getAllMessagesByTchatRoomName(tchatRoomName) {
 function switchGrp(tchatRoomName) {
 	$('#currentGrpName').text(tchatRoomName);
 	getAllMessagesByTchatRoomName(tchatRoomName);
+	$.cookie("tchatRoomNameCookie", tchatRoomName)
 
 }
 
