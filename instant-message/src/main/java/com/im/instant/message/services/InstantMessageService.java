@@ -1,12 +1,17 @@
 package com.im.instant.message.services;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
@@ -21,14 +26,13 @@ public class InstantMessageService {
 	private final Logger log = (Logger) LoggerFactory.getLogger(InstantMessageService.class);
 
 	final String linuxPath = "C:\\sauv\\";
-	//final String linuxPath = "/local-git-clone/octopussy/instant-message/sauv/";
+	// final String linuxPath = "/local-git-clone/octopussy/instant-message/sauv/";
 	// final String windowsPath = "";
 
-	
 	final String userFolderPath = linuxPath + "users\\";
 
 	final String messagePath = linuxPath + "messages\\";
-	
+
 //	final String userFolderPath = linuxPath + "users/";
 //
 //	final String messagePath = linuxPath + "messages/";
@@ -126,13 +130,22 @@ public class InstantMessageService {
 		String tchatRoom = message.getTchatRoom();
 
 		if (message != null) {
-			if(isUserExist(userName) == true) {
+			if (isUserExist(userName) == true) {
 				if (isTchatRoomExist(tchatRoom) == true) {
-					File messageFile = new File(messagePath + tchatRoom + "/" +  "message.txt");
+//					File messageFile = new File(messagePath + tchatRoom + "/" + "message.txt");
 					
+					FileWriter fw = new FileWriter(messagePath + tchatRoom + "/" + "message.txt", true);
+
 					try {
+						
 						BufferedWriter writer = new BufferedWriter(new FileWriter(messageFile));
+						BufferedWriter bw = new BufferedWriter(fw);
+					    PrintWriter out = new PrintWriter(bw))
+						
+						out.println("the text");
+						writer.write(message.getUser());
 						writer.write(message.getMessage());
+						writer.write(message.getDate());
 						writer.write(System.lineSeparator());
 						writer.close();
 					} catch (IOException e) {
@@ -150,8 +163,6 @@ public class InstantMessageService {
 		return new IMResponse(success, "Message sent");
 	}
 
-	
-	
 	public boolean isUserExist(String userName) {
 
 		if (userName != null) {
@@ -185,11 +196,11 @@ public class InstantMessageService {
 	}
 
 	public IMResponse listAllTchatRoomName() {
-		
+
 		IMResponse response = new IMResponse();
 		List<String> allTchatRoomName = new ArrayList<String>();
 		String tchatRoomName = "";
-		
+
 		File repertoire = new File(messagePath);
 		File[] files = repertoire.listFiles();
 
@@ -200,9 +211,38 @@ public class InstantMessageService {
 			}
 			response.setTchatRoomName(allTchatRoomName);
 		}
-		
+
+		response.setSuccess(true);
+
+		return response;
+	}
+
+	public IMResponse listAllMessagesByTchatRoom(String tchatRoomName) {
+
+		IMResponse response = new IMResponse();
+		List<String> msgList = new ArrayList<String>();
+
+		try {
+			BufferedReader bufReader = new BufferedReader(
+					new FileReader(messagePath + tchatRoomName + "\\message.txt"));
+
+			String line = bufReader.readLine();
+			while (line != null) {
+				msgList.add(line);
+				line = bufReader.readLine();
+			}
+			
+			response.setMsgList(msgList);
+
+			bufReader.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		response.setSuccess(true);
 		
 		return response;
 	}
+
 }

@@ -89,4 +89,22 @@ public class InstantMessageController {
 				return new ResponseEntity<IMResponse>(response, HttpStatus.OK);
 			}
 		}
+	
+	@RequestMapping(value = "/listMessagesByTchatRoom", method = RequestMethod.POST)
+	public ResponseEntity<IMResponse> listMessagesByTchatRoom(@RequestBody TchatRooms tchat) {
+
+		if (tchat != null) {
+			
+			String tchatRoomName = tchat.getRoomName();
+			IMResponse response = instantMessageService.listAllMessagesByTchatRoom(tchatRoomName);
+			
+			if (!response.isSuccess()) {
+				return new ResponseEntity<IMResponse>(response, HttpStatus.EXPECTATION_FAILED);
+			} else {
+				return new ResponseEntity<IMResponse>(response, HttpStatus.OK);
+			}
+		}else {
+			return new ResponseEntity<IMResponse>(new IMResponse(Strings.NULL_REQUEST), HttpStatus.BAD_REQUEST);
+		}
+	}
 }

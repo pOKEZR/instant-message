@@ -1,7 +1,11 @@
 var listTchatRoom;
+var currentTchatRoom;
+var username = 'jper';
 
 $( document ).ready(function() {
 	getAllTchatRoom();
+	$('#currentGrpName').text(currentTchatRoom)
+	getAllMessagesByTchatRoomName(currentTchatRoom);
 	
 	$( "#addGrp" ).click(function() {
 		$('#myModal').modal('show');
@@ -12,13 +16,20 @@ $( document ).ready(function() {
 		createTchatRoom();
 		$('#myModal').modal('hide');
 	});
+	
+	$('body').on('click', '.groupBorder', function(param) {
+	  switchGrp(this.attributes[0].value);
+	});
+	
+	$('#sendMsg').click(function () {
+		sendMessage();
+	});
 });
 
 // -- GESTION DES EVENEMENTS 
 
 function getAllTchatRoom() {
 	$('.grpSelector').empty();
-	var listTchatRoom = [];
 	$.ajax({
 	    url: '/listTchatRoomName',
 	    type: 'GET',
@@ -32,7 +43,7 @@ function getAllTchatRoom() {
 		// Dans ce cas là on va préparer à append la liste des groupes
 		var html = "";
 		for (var i = 0; i < listTchatRoom.length;i++) {
-			html +='<div class="groupBorder col-xs-12"><div class="row"><div class="col-xs-3 grpPicture">\
+			html +='<div grpName="' + listTchatRoom[i] + '" class="groupBorder col-xs-12"><div class="row"><div class="col-xs-3 grpPicture">\
 				<i class="fa fa-user-circle-o fa-3x grpIcon" aria-hidden="true"></i>\
 				</div>\
 				<div class="col-xs-9">\
@@ -42,6 +53,7 @@ function getAllTchatRoom() {
 				</div></div></div>';
 		}
 		$('.grpSelector').append(html);
+		currentTchatRoom = listTchatRoom[0];
 	}
 
 }
@@ -64,11 +76,18 @@ function createTchatRoom() {
 }
 
 function sendMessage() {
+	
+	// Création de la date formaté HH:MM
+	var d = new Date();
+	var hours = d.getHours();
+	var minutes = d.getMinutes();
+	console.log(hours + ":" + minutes);
+
 	var dataToSend = {
-			'message': 'Bonjour',
-			'user':'jper',
-			'tchatRoom': 'bjr',
-			'date': new Date().getTime(),
+			'message': $('#msgArea').val(),
+			'user': username,
+			'tchatRoom': currentTchatRoom,
+			'date': hours + ":" + minutes,
 	}
 	
 	
@@ -80,12 +99,14 @@ function sendMessage() {
 	    async:false,
 	    data: JSON.stringify(dataToSend),
 	    success: function(data) { 
-	    	console.log(data);
-	    	}
+	    	getAllMessagesByTchatRoomName(currentTchatRoom);
+	    	$('#msgArea').val("");
+	    }
 	});
 }
 
 function createUser() {
+
 	var dataToSend = {
 			'userName': 'jper',
 			'password': 'patate',
@@ -101,4 +122,42 @@ function createUser() {
 	    	console.log(data);
 	    	}
 	});
+}
+
+function getAllMessagesByTchatRoomName(tchatRoomName) {
+	var listOfMessages;
+	var dataToSend = {
+		'roomName': tchatRoomName,
+	}
+	$.ajax({
+	    url: '/listMessagesByTchatRoom',
+	    dataType : "json",
+	    contentType: "application/json; charset=utf-8",
+	    type: 'POST',
+	    async:false,
+	    data: JSON.stringify(dataToSend),
+	    success: function(data) { 
+	    		listOfMessages = data.msgList;
+	    	}
+	});
+	
+		// Parcours de la liste des messages et affichage 
+		var html = "";
+		$('#grpMsgContainer').empty();
+		if(listOfMessages != null) {
+
+		for (var i = 0; i < listOfMessages.length;i++) {
+			html += '	<div class="bubble">\
+							<p class="textMessage">' + listOfMessages[i] +'</p>\
+							<p class="textMessageTime">NaN</p>\
+						</div>';
+		}
+		$('#grpMsgContainer').append(html);
+	}
+}
+
+function switchGrp(tchatRoomName) {
+	$('#currentGrpName').text(tchatRoomName);
+	getAllMessagesByTchatRoomName(tchatRoomName);
+
 }

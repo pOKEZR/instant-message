@@ -1,7 +1,5 @@
 package com.im.instant.message;
 
-import java.util.Date;
-
 public class Message {
 
 	private String message;
@@ -10,7 +8,7 @@ public class Message {
 	
 	private String tchatRoom;
 	
-	private Date date;
+	private String date;
 
 	
 	public Message() {
@@ -61,14 +59,14 @@ public class Message {
 	/**
 	 * @return the date
 	 */
-	public Date getDate() {
+	public String getDate() {
 		return date;
 	}
 
 	/**
 	 * @param date the date to set
 	 */
-	public void setDate(Date date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 	

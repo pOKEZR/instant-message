@@ -10,6 +10,8 @@ public class IMResponse {
 	
 	private List<String> tchatRoomName;
 	
+	private List<String> msgList;
+	
 	public IMResponse() {
 	}
 
@@ -54,6 +56,13 @@ public class IMResponse {
 		this.success = success;
 	}
 
+	public List<String> getMsgList() {
+		return msgList;
+	}
+
+	public void setMsgList(List<String> msgList) {
+		this.msgList = msgList;
+	}
 	/**
 	 * @return the tchatRoomName
 	 */
