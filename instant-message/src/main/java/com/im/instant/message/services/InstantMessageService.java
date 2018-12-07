@@ -252,7 +252,7 @@ public class InstantMessageService {
 					bufReader = new BufferedReader(new FileReader(userFolderPath + userName + "\\" + userName + "login.txt"));
 					String line = bufReader.readLine();
 					while (line != null) {
-						if (line.equals(userName)) {
+						if (line.equals(userPassword)) {
 							response.setSuccess(true);
 							response.setErrorMessage("User and password MATCH");
 							bufReader.close();

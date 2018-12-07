@@ -49,7 +49,7 @@ $(document).ready(function () {
         disconnectedUser();
     });
     window.setInterval(function () {
-        getAllMessagesByTchatRoomName(currentTchatRoom);
+         getAllMessagesByTchatRoomName(currentTchatRoom);
         getAllTchatRoomAndLastMessage();
         $('#grpMsgContainer').animate({ scrollTop: 100000 }, 1000);
     }, 1000);
@@ -112,7 +112,7 @@ function getAllTchatRoomAndLastMessage() {
 
     // On parcours la liste des tchatrooms et on va récupérer le dernier message de chacune
     var listTchatRoomComplete = [];
-
+    var listNewTchatRoom = [];
     for (var i = 0; i < listTchatRoom.length; i++) {
         // On va créer une seconde liste qu'on va push dans la première pour pouvoir
         // contenir le nom de la tchatroom en position 0 et le split du message en 1 2 et 3
@@ -143,6 +143,7 @@ function getAllTchatRoomAndLastMessage() {
             locList.push(fullMsg);
         }
         listTchatRoomComplete.push(locList);
+       // listNewTchatRoom.push(locList);
     }
 
     // On récupère la valeur de notre cookie oldMessage pour comparer avec notre liste actuelle
@@ -154,6 +155,7 @@ function getAllTchatRoomAndLastMessage() {
     	// Première visite ou alors cookie expiré : on en peut pas comparer, tous les messages viennent en gras
     	for (var i = 0; i < listTchatRoomComplete.length;i++) {
     		var displayMsg = "";
+    		try {
     		var roomTitle = listTchatRoomComplete[i][0];
     		var lastPosterName = listTchatRoomComplete[i][1][0];
     		var lastPosterMsg = listTchatRoomComplete[i][1][1];
@@ -165,6 +167,13 @@ function getAllTchatRoomAndLastMessage() {
     		} else {
     			displayMsg = lastPosterName + " : " + lastPosterMsg;
     		}
+    		} catch(error) {
+    			var roomTitle = listTchatRoomComplete[i][0];
+    			var lastPosterName = "";
+    			var lastPosterMsg = "";
+    			var lastPosterTime = "";
+    			
+    		}
     		
     		 html += '<div grpName="' + roomTitle + '" class="groupBorder col-xs-12"><div class="row"><div class="col-xs-3 grpPicture">\
  						<i class="fa fa-user-circle-o fa-3x grpIcon" aria-hidden="true"></i>\
@@ -175,6 +184,18 @@ function getAllTchatRoomAndLastMessage() {
 	            <p class="lastMsgTime">' + lastPosterTime + '</p>\
 	        </div></div></div>';
     	}
+    	
+//    	for(var i = 0 ; listNewTchatRoom.length;i++) {
+//    		 html += '<div grpName="'+ listNewTchatRoom[i] +'" class="groupBorder col-xs-12">\
+//    		 	<div class="row"><div class="col-xs-3 grpPicture">\
+//				<i class="fa fa-user-circle-o fa-3x grpIcon" aria-hidden="true"></i>\
+//	 		  </div>\
+//	 		  <div class="col-xs-9">\
+//     			<p class="grpName"></p>\
+//     <p class="lastMsgGrp"></p>\
+//     <p class="lastMsgTime"></p>\
+// </div></div></div>';
+//    	}
     }
     $('.grpSelector').append(html);
 
@@ -495,11 +516,20 @@ function getAllMessagesByTchatRoomName(tchatRoomName) {
 
             var temp = listOfMessages[i].split('|');
 
-            html += '	<div class="bubble">\
+            if(username == temp[0]) {
+                        html += '	<div class="bubble">\
 							<p class="bold textMessage">'+ temp[0] + ' : </p>\
 							<p class="textMessage">' + temp[1] + '</p>\
 							<p class="textMessageTime">' + temp[2] + '</p>\
 						</div>';
+        	} else {
+        	    html += '	<div class="tresSale grayBubble bubble">\
+					<p class="bold textMessage">'+ temp[0] + ' : </p>\
+					<p class="textMessage">' + temp[1] + '</p>\
+					<p class="textMessageTime">' + temp[2] + '</p>\
+				</div>';
+
+        	}
         }
         $('#grpMsgContainer').append(html);
     }
